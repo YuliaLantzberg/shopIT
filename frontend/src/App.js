@@ -53,17 +53,33 @@ import { loadStripe } from '@stripe/stripe-js';
 function App() {
   const dispatch = useDispatch();
   const [stripeApiKey, setStripeApiKey] = useState('');
+  const [isLoading, setLoading] = useState(true);
+
+  function fakeRequest() {
+    return new Promise((resolve) => setTimeout(() => resolve(), 2500));
+  }
 
   useEffect(() => {
+    fakeRequest().then(() => {
+      const el = document.querySelector('.loader');
+      if (el) {
+        el.remove();
+        setLoading(!isLoading);
+      }
+    });
     dispatch(loadUser());
     async function getStripeApiKey() {
       const { data } = await axios.get('/api/v1/stripeapi');
       setStripeApiKey(data.stripeApiKey);
     }
     getStripeApiKey();
-  }, [dispatch]);
+  }, [dispatch, isLoading]);
 
   const { user, isAuthenticated, loading } = useSelector((state) => state.auth);
+
+  if (isLoading) {
+    return null;
+  }
 
   return (
     <Router>

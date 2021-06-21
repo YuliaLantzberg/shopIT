@@ -55,9 +55,6 @@ console.log(typeof localStorage.getItem('cartItems'));
 
 let initialState = {
   cart: {
-    // cartItems: localStorage.getItem('cartItems')
-    //   ? JSON.parse(localStorage.getItem('cartItems'))
-    //   : [],
     cartItems: [],
     shippingInfo: localStorage.getItem('shippingInfo')
       ? JSON.parse(localStorage.getItem('shippingInfo'))
@@ -65,6 +62,13 @@ let initialState = {
     storedItems: localStorage.getItem('cartItems')
       ? JSON.parse(localStorage.getItem('cartItems'))
       : [],
+  },
+  products: {
+    loading: true,
+    products: [],
+    productsCount: null,
+    resPerPage: null,
+    filteredProductsCount: null,
   },
 };
 
